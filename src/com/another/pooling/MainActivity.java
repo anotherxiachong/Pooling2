@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
 				case 6:
 					Intent intent6  = new Intent(MainActivity.this, CitiesActivity.class);
 					Bundle classes = new Bundle();
-					classes.putString("classes", "search");
+					classes.putString("classes", "search_online");
 					intent6.putExtras(classes);
 					startActivity(intent6);
 					break;

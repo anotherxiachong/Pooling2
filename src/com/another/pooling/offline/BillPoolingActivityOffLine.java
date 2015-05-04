@@ -121,19 +121,6 @@ public class BillPoolingActivityOffLine extends Activity {
 		Intent intent = new Intent(this, MyInfoActivity.class);
 		startActivity(intent);
 	}
-	
-	public void near(View view) {
-		Intent intent = new Intent(this, NearResultActivity.class);
-		startActivity(intent);
-	}
-	
-	public void search(View view) {
-		Intent intent  = new Intent(this, CitiesActivity.class);
-		Bundle classes = new Bundle();
-		classes.putString("classes", "search_offline");
-		intent.putExtras(classes);
-		startActivity(intent);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

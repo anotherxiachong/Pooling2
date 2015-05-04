@@ -76,7 +76,11 @@ public class LoaderAdapter extends BaseAdapter{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		String url = "";
-		url = urlArrays[position % urlArrays.length];
+		if(urlArrays.length != 0) {
+			url = urlArrays[position % urlArrays.length];
+		} else {
+			return null;
+		}
 		
 		viewHolder.mImageView.setImageResource(R.drawable.ic_launcher);
 		

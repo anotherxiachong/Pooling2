@@ -105,6 +105,7 @@ public class SearchResultActivityOffLine extends Activity {
 		    	bundle.putInt("count", length);
 		    	intent.putExtras(bundle);
 		    	startActivity(intent);
+		    	SearchResultActivityOffLine.this.finish();
 		    }
 		    @Override
 		    public void onError(int code, String msg) {

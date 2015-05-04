@@ -30,7 +30,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/pooling_ic_middle"
         android:label="@string/app_name"

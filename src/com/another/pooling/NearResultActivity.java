@@ -122,6 +122,7 @@ public class NearResultActivity extends Activity  implements AMapLocationListene
 		    	bundle.putInt("count", length);
 		    	intent.putExtras(bundle);
 		    	startActivity(intent);
+		    	NearResultActivity.this.finish();
 		    }
 		    @Override
 		    public void onError(int code, String msg) {

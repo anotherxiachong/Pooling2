@@ -134,6 +134,7 @@ public class NearResultActivityOffLine extends Activity  implements AMapLocation
 		    	bundle.putInt("count", length);
 		    	intent.putExtras(bundle);
 		    	startActivity(intent);
+		    	NearResultActivityOffLine.this.finish();
 		    }
 		    @Override
 		    public void onError(int code, String msg) {

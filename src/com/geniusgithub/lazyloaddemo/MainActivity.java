@@ -44,8 +44,11 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
-		itemsCount = this.getIntent().getExtras().getInt("count");
 		URLS = this.getIntent().getExtras().getStringArray("urls");
+		if(URLS == null) {
+			this.finish();
+		}
+		itemsCount = this.getIntent().getExtras().getInt("count");
 		describe = this.getIntent().getExtras().getStringArray("describe");
 		no = this.getIntent().getExtras().getStringArray("no");
 		setupViews(itemsCount, URLS, describe);
