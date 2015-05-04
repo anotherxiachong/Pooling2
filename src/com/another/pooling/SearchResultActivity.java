@@ -65,7 +65,7 @@ public class SearchResultActivity extends Activity {
 		BmobQuery<BillInfo> bmobQuery = new BmobQuery<BillInfo>();
 		bmobQuery.addWhereEqualTo("address", address);
 		bmobQuery.addWhereEqualTo("classes", 0);
-		bmobQuery.setLimit(100);    //获取最接近用户地点的10条数据
+		bmobQuery.setLimit(100);    //获取最接近用户地点的100条数据
 		bmobQuery.findObjects(SearchResultActivity.this, new FindListener<BillInfo>() {
 		    @Override
 		    public void onSuccess(List<BillInfo> object) {
@@ -73,37 +73,41 @@ public class SearchResultActivity extends Activity {
 		        //Toast.makeText(NearActivity.this, "查询成功：共" + object.size() + "条数据。"/*  + mPosition.getLatitude() + " " + mPosition.getLongitude()*/, Toast.LENGTH_LONG).show();
 		    	if(object.size() == 0) {
 		    		Toast.makeText(SearchResultActivity.this, "没有找到哦~快去发起拼单吧~", Toast.LENGTH_LONG).show();
+		    		Intent intent = new Intent(SearchResultActivity.this, BillPoolingActivity.class);
+		    		startActivity(intent);
+		    		SearchResultActivity.this.finish();
+		    	} else {
+		    		string_dec= "";
+		    		string_username="";
+		    		string_no="";
+		    		uri = new ArrayList<String>();
+		    		for(BillInfo billInfo : object) {
+		    			string_username = string_username + billInfo.getUsername() + " ";
+		    			string_no = string_no + billInfo.getObjectId() + " ";
+		    			uri.add(billInfo.getImgfilename()[0]);
+		    			if(billInfo.getDescribe().equals("")) {
+		    				string_dec= string_dec + "暂无" + " ";
+		    			} else {
+		    				string_dec= string_dec + billInfo.getDescribe() + " ";
+		    			}
+		    		}
+		    		username = string_username.trim().split(" ");
+		    		no = string_no.trim().split(" ");
+		    		pre_desString = string_dec.trim().split(" ");
+		    		image_uri = uri.toArray(new String[uri.size()]);
+		    		length = username.length;
+		    		//Log.i("username", length+"");
+		    		//		    	initView();
+		    		Intent intent = new Intent(SearchResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
+		    		Bundle bundle = new Bundle();
+		    		bundle.putStringArray("urls", image_uri);
+		    		bundle.putStringArray("describe", pre_desString);
+		    		bundle.putStringArray("no", no);
+		    		bundle.putInt("count", length);
+		    		intent.putExtras(bundle);
+		    		startActivity(intent);
 		    		SearchResultActivity.this.finish();
 		    	}
-		    	string_dec= "";
-		    	string_username="";
-		    	string_no="";
-		    	uri = new ArrayList<String>();
-		    	for(BillInfo billInfo : object) {
-		    		string_username = string_username + billInfo.getUsername() + " ";
-		    		string_no = string_no + billInfo.getObjectId() + " ";
-		    		uri.add(billInfo.getImgfilename()[0]);
-		    		if(billInfo.getDescribe().equals("")) {
-		    			string_dec= string_dec + "暂无" + " ";
-		    		} else {
-		    			string_dec= string_dec + billInfo.getDescribe() + " ";
-		    		}
-		    	}
-		    	username = string_username.trim().split(" ");
-		    	no = string_no.trim().split(" ");
-		    	pre_desString = string_dec.trim().split(" ");
-		    	image_uri = uri.toArray(new String[uri.size()]);
-		    	length = username.length;
-		    	//Log.i("username", length+"");
-//		    	initView();
-		    	Intent intent = new Intent(SearchResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
-		    	Bundle bundle = new Bundle();
-		    	bundle.putStringArray("urls", image_uri);
-		    	bundle.putStringArray("describe", pre_desString);
-		    	bundle.putStringArray("no", no);
-		    	bundle.putInt("count", length);
-		    	intent.putExtras(bundle);
-		    	startActivity(intent);
 		    }
 		    @Override
 		    public void onError(int code, String msg) {
