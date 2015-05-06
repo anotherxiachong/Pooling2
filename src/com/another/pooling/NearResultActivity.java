@@ -18,8 +18,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -36,6 +38,8 @@ public class NearResultActivity extends Activity  implements AMapLocationListene
 	private String string_no;
 	private String string_file_name;
 	private int length = 0;
+	
+	private TextView title;
 
 //	private ListView datalist = null; // 定义ListView组件
 	
@@ -56,7 +60,8 @@ public class NearResultActivity extends Activity  implements AMapLocationListene
         //.penaltyLog().penaltyDeath().build());  
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 		mPosition = new BmobGeoPoint();
-		
+		 title = (TextView) findViewById(R.id.title_result_tv);
+		 title.setText("线上拼单-附近");
 		getPosition();
 		
 	}

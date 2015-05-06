@@ -33,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.another.pooling.*;
@@ -57,20 +58,22 @@ public class NearResultActivityOffLine extends Activity  implements AMapLocation
 	private double longitude;
 	private double latitude;
 	private BmobGeoPoint mPosition;
+	private TextView title;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.activity_result);
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
-        .detectDiskReads().detectDiskWrites().detectNetwork()  
-        .penaltyLog().build());  
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
-        .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()  
-        .penaltyLog().penaltyDeath().build());  
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
+//        .detectDiskReads().detectDiskWrites().detectNetwork()  
+//        .penaltyLog().build());  
+//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
+//        .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()  
+//        .penaltyLog().penaltyDeath().build());  
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 		mPosition = new BmobGeoPoint();
-		
+		 title = (TextView) findViewById(R.id.title_result_tv);
+		 title.setText("线下拼单-附近");
 		getPosition();
 		
 	}

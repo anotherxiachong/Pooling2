@@ -48,12 +48,12 @@ public class MyPublishedResultActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.activity_result);
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
-        .detectDiskReads().detectDiskWrites().detectNetwork()  
-        .penaltyLog().build());  
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
-        .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()  
-        .penaltyLog().penaltyDeath().build());  
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
+//        .detectDiskReads().detectDiskWrites().detectNetwork()  
+//        .penaltyLog().build());  
+//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
+//        .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()  
+//        .penaltyLog().penaltyDeath().build());  
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 	
 		getData();

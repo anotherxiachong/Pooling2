@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 
 
 	public void setupViews(int itemsCount, String[] urls, String[] des) {
-		mListview = (ListView) findViewById(R.id.datalist);
+		mListview = (ListView) findViewById(R.id.datalist_sear_off);
 		adapter = new LoaderAdapter(itemsCount, this, urls, des);
 		mListview.setAdapter(adapter);
 		mListview.setOnScrollListener(mScrollListener);

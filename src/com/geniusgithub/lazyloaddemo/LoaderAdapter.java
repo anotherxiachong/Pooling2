@@ -41,7 +41,11 @@ public class LoaderAdapter extends BaseAdapter{
 	}
 	
 	public ImageLoader getImageLoader(){
-		return mImageLoader;
+		if(mImageLoader != null) {
+			return mImageLoader;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

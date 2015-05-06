@@ -14,17 +14,39 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
+import com.another.pooling.BillPoolingActivity.AddPopupWindows;
+import com.another.pooling.my.MyInfoActivity;
+import com.another.pooling.offline.BillPoolingActivityOffLine;
+import com.another.pooling.offline.DetailResultActivityOffLine;
+import com.another.pooling.offline.PublishedActivityOffLine;
+import com.another.pooling.offline.SearchResultActivityOffLine;
+import com.example.testpic.PublishedActivity;
+import com.geniusgithub.lazyloaddemo.LoaderAdapter;
+import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -45,25 +67,56 @@ public class SearchResultActivity extends Activity {
 //	private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); // 定义显示的内容包装
 //	private SimpleAdapter simpleAdapter = null; // 进行数据的转换操作
 //	
+	private ListView mListview;
+	private LoaderAdapter adapter;
 	
 	private String address;
+	private TextView title;
+	private TextView overflow;
+	
+	private SlidingMenu mLeftMenu;
 
+	private CustomFAB customFAB;
+	private RelativeLayout relativeLayout;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.activity_result);
+		super.setContentView(R.layout.activity_search_result);
 		
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
-		
+		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu_search_result);
 		address = getIntent().getExtras().getString("address");
-		
+		 title = (TextView) findViewById(R.id.title_tv_search_result);
+		 title.setText("线上拼单-搜索");
+		 overflow = (TextView) findViewById(R.id.push_tv_search_result);
+			overflow.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					mLeftMenu.toggle();
+				}
+			});
+			
+			relativeLayout = (RelativeLayout) findViewById(R.id.search_result_rela_lay);
+			customFAB = (CustomFAB) findViewById(R.id.search_result_add);
+			customFAB.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					new AddPopupWindows(SearchResultActivity.this, relativeLayout);
+				}
+			});
 		getData();
 	}
 	
 	private void getData() {
 		// TODO Auto-generated method stub
 		BmobQuery<BillInfo> bmobQuery = new BmobQuery<BillInfo>();
-		bmobQuery.addWhereEqualTo("address", address);
+//		bmobQuery.addWhereEqualTo("address", address);
+		bmobQuery.addWhereEqualTo("address", "");
 		bmobQuery.addWhereEqualTo("classes", 0);
 		bmobQuery.setLimit(100);    //获取最接近用户地点的100条数据
 		bmobQuery.findObjects(SearchResultActivity.this, new FindListener<BillInfo>() {
@@ -98,15 +151,16 @@ public class SearchResultActivity extends Activity {
 		    		length = username.length;
 		    		//Log.i("username", length+"");
 		    		//		    	initView();
-		    		Intent intent = new Intent(SearchResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
-		    		Bundle bundle = new Bundle();
-		    		bundle.putStringArray("urls", image_uri);
-		    		bundle.putStringArray("describe", pre_desString);
-		    		bundle.putStringArray("no", no);
-		    		bundle.putInt("count", length);
-		    		intent.putExtras(bundle);
-		    		startActivity(intent);
-		    		SearchResultActivity.this.finish();
+//		    		Intent intent = new Intent(SearchResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
+//		    		Bundle bundle = new Bundle();
+//		    		bundle.putStringArray("urls", image_uri);
+//		    		bundle.putStringArray("describe", pre_desString);
+//		    		bundle.putStringArray("no", no);
+//		    		bundle.putInt("count", length);
+//		    		intent.putExtras(bundle);
+//		    		startActivity(intent);
+//		    		SearchResultActivity.this.finish();
+		    		setupViews(length, image_uri, pre_desString);
 		    	}
 		    }
 		    @Override
@@ -116,7 +170,91 @@ public class SearchResultActivity extends Activity {
 		    }
 		});
 	}
+	
+//	@Override
+//	protected void onDestroy() {
+//		
+//		
+//		ImageLoader imageLoader = adapter.getImageLoader();
+//		if (imageLoader != null){
+//			imageLoader.clearCache();
+//		} else {
+//			return;
+//		}
+//		
+//		super.onDestroy();
+//	}
 
+
+
+	public void setupViews(int itemsCount, String[] urls, String[] des) {
+		mListview = (ListView) findViewById(R.id.datalist_search_result);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des);
+		mListview.setAdapter(adapter);
+		mListview.setOnScrollListener(mScrollListener);
+		mListview.setOnItemClickListener(new OnItemClickListener(){  
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				String objectid = no[position];
+				//Toast.makeText(SQLiteCRUDActivity.this, userid +" , "+ name +" , "+ age ,Toast.LENGTH_LONG).show(); 
+				Intent intent = new Intent(SearchResultActivity.this, DetailResultActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("objectId", objectid);
+				intent.putExtras(bundle);
+				startActivity(intent);     
+			}  
+	});  
+	}
+
+	OnScrollListener mScrollListener = new OnScrollListener() {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			switch (scrollState) {
+			case OnScrollListener.SCROLL_STATE_FLING:
+				adapter.setFlagBusy(true);
+				break;
+			case OnScrollListener.SCROLL_STATE_IDLE:
+				adapter.setFlagBusy(false);
+				break;
+			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+				adapter.setFlagBusy(false);
+				break;
+			default:
+				break;
+			}
+			adapter.notifyDataSetChanged();
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+
+		}
+	};
+
+	public void toggleMenu(View view)
+	{
+		mLeftMenu.toggle();
+	}
+	
+	public void EnterBillPoolingOnLine(View view) {
+		Intent intent = new Intent(this, BillPoolingActivity.class);
+		startActivity(intent);
+	}
+	
+	public void EnterBillPoolingOffLine(View view) {
+		Intent intent = new Intent(this, BillPoolingActivityOffLine.class);
+		startActivity(intent);
+	}
+	
+	public void EnterMyInfo(View view) {
+		Intent intent = new Intent(this, MyInfoActivity.class);
+		startActivity(intent);
+	}
 	
 	
 //	
@@ -155,6 +293,66 @@ public class SearchResultActivity extends Activity {
 //			}  
 //		});  
 //	}
+	public class AddPopupWindows extends PopupWindow
+	{
+
+		public AddPopupWindows(Context mContext, View parent)
+		{
+			
+			 super(mContext);
+
+			View view = View
+					.inflate(mContext, R.layout.add_popupwindows, null);  //选择拍照相册..
+			view.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.fade_ins)); //设置渐变出现动画
+			LinearLayout ll_popup = (LinearLayout) view
+					.findViewById(R.id.ll_popup);
+			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.push_bottom_in_2));  //按钮按下的动画效果
+
+			setWidth(LayoutParams.MATCH_PARENT);
+			setHeight(LayoutParams.MATCH_PARENT);
+			setBackgroundDrawable(new BitmapDrawable());
+			setFocusable(true);
+			setOutsideTouchable(true);
+			setContentView(view);
+			showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+			update();
+
+			Button bt1 = (Button) view
+					.findViewById(R.id.add_popupwindows_online);
+			Button bt2 = (Button) view
+					.findViewById(R.id.add_popupwindows_offline);
+			Button bt3 = (Button) view
+					.findViewById(R.id.add_popupwindows_cancel);
+			bt1.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					Intent intent = new Intent(SearchResultActivity.this, PublishedActivity.class);
+					startActivity(intent);
+					dismiss();
+				}
+			});
+			bt2.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					Intent intent = new Intent(SearchResultActivity.this, PublishedActivityOffLine.class);
+					startActivity(intent);
+					dismiss();
+				}
+			});
+			bt3.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					dismiss();
+				}
+			});
+
+		}
+	}
 }
 
 

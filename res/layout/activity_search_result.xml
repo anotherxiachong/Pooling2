@@ -1,31 +1,92 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res/com.another.pooling"
+    xmlns:hyman="http://schemas.android.com/apk/res/com.another.pooling"
+    xmlns:sat="http://schemas.android.com/apk/res/com.another.pooling"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent" >
+
+    <com.another.pooling.SlidingMenu
+        android:id="@+id/id_menu_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5BE33"
+        hyman:rightPadding="80dp" >
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            
+            <include layout="@layout/left_menu"/>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"  
+                android:background="#FFFFFF">
+                
+                <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ff495a" >
+        
+        <TextView
+            android:id="@+id/push_tv_search_result"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:background="@drawable/ic_action_overflow"
+            android:textColor="@drawable/text_while"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/title_tv_search_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="官方拼单-附近"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+      
+    </RelativeLayout>
+     <RelativeLayout 
+          android:id="@+id/search_result_rela_lay"
+          android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.another.pooling.SearchResultActivity" >
-
-     <TextView 
-         android:layout_width="match_parent"
-         android:layout_height="60dp"
-         android:text="附近"
-         android:textColor="#ffffff"
-         android:textSize="20sp" 
-         android:gravity="center"
-         android:background="#ff495a"/>
-
-    <ListView
-		android:id="@+id/datalist" 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		 android:clipToPadding="false"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-        android:padding="10dp"
-        android:scrollbarStyle="outsideOverlay"
-        tools:listitem="@layout/bill_info_layout"/>
+    android:paddingBottom="@dimen/activity_vertical_margin">
+                
+                <ListView
+                    android:id="@+id/datalist_search_result" 
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+		 			android:clipToPadding="false"
+        			android:divider="@android:color/transparent"
+        			android:dividerHeight="10dp"
+        			android:padding="10dp"
+        			android:scrollbarStyle="outsideOverlay"
+        			tools:listitem="@layout/bill_info_layout"/>
+                
+                
+                <com.another.pooling.CustomFAB
+                  android:id="@+id/search_result_add"
+                   android:layout_width="56dp"
+                   android:layout_height="56dp"
+                   android:src="@android:drawable/ic_input_add"
+                   android:layout_alignParentBottom="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginBottom="16dp"
+                   custom:bg_color="@color/light_blue"
+                   android:tint="@android:color/white"/>
+    </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.another.pooling.SlidingMenu>
 
 </RelativeLayout>

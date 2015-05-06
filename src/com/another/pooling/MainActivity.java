@@ -3,37 +3,87 @@ package com.another.pooling;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.listener.FindListener;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.another.pooling.my.MyInfoActivity;
 import com.another.pooling.offline.BillPoolingActivityOffLine;
+import com.another.pooling.offline.PublishedActivityOffLine;
 import com.example.testpic.PublishedActivity;
-import com.yasinyildirim.cardlayout.CardLayoutActivity;
+import com.example.testpic.TestPicActivity;
+//import com.example.testpic.PublishedActivity;
+import com.geniusgithub.lazyloaddemo.LoaderAdapter;
+import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AnimationUtils;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.ext.SatelliteMenu;
-import android.view.ext.SatelliteMenuItem;
-import android.view.ext.SatelliteMenu.SateliteClickedListener;
+//import android.view.WindowManager;
+//import android.view.ext.SatelliteMenu;
+//import android.view.ext.SatelliteMenuItem;
+//import android.view.ext.SatelliteMenu.SateliteClickedListener;
+//import android.widget.LinearLayout;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
+//import android.widget.LinearLayout.LayoutParams;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AMapLocationListener {
 	
-	private SlidingMenu mLeftMenu; 
-	private TextView onOff;
+	private SlidingMenu mLeftMenu;
+	private TextView overflow;
+	private CustomFAB customFAB;
+	private RelativeLayout relativeLayout;
 	boolean isExit;  
+	
+	private String username[] = null;
+	private String image_uri[] = null;
+	private List<String> uri;
+	private String pre_desString[] = null;
+	private String no[] = null;
+	private String string_dec;
+	private String string_username;
+	private String string_no;
+	private String string_file_name;
+	private int length = 0;
+	
+	LocationManagerProxy mLocationManagerProxy;
+	private double longitude;
+	private double latitude;
+	private BmobGeoPoint mPosition;
+	
+	private ListView mListview;
+	private LoaderAdapter adapter;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,57 +91,83 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		
-		 SatelliteMenu menu = (SatelliteMenu) findViewById(R.id.menu);
 		
-		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
-		
-		WindowManager wm = this.getWindowManager();
-		int width = wm.getDefaultDisplay().getWidth();
-		int height = wm.getDefaultDisplay().getHeight();
-		
-		SatelliteMenu smenu = (SatelliteMenu) findViewById(R.id.menu);
-		LinearLayout.LayoutParams params = (LayoutParams) smenu.getLayoutParams();
-		params.topMargin = height - 1200;
-		smenu.setLayoutParams(params);
-		
-		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
-        items.add(new SatelliteMenuItem(6, R.drawable.ic_1));
-        items.add(new SatelliteMenuItem(5, R.drawable.ic_3));
-        items.add(new SatelliteMenuItem(4, R.drawable.ic_4));
-        items.add(new SatelliteMenuItem(3, R.drawable.ic_5));
-        items.add(new SatelliteMenuItem(2, R.drawable.ic_6));
-        items.add(new SatelliteMenuItem(1, R.drawable.ic_2));
-//        items.add(new SatelliteMenuItem(5, R.drawable.sat_item));
-        menu.addItems(items);        
-        
-        menu.setOnItemClickedListener(new SateliteClickedListener() {
+		overflow = (TextView) findViewById(R.id.push_tv);
+		overflow.setOnClickListener(new OnClickListener() {
 			
-			public void eventOccured(int id) {
-				Log.i("sat", "Clicked on " + id);
-				switch (id) {
-				case 3:
-					Intent intent3 = new Intent(MainActivity.this, NearResultActivity.class);
-					startActivity(intent3);
-					break;
-					
-				case 5:
-					Intent intent5 = new Intent(MainActivity.this, PublishedActivity.class);
-					startActivity(intent5);
-					break;
-					
-				case 6:
-					Intent intent6  = new Intent(MainActivity.this, CitiesActivity.class);
-					Bundle classes = new Bundle();
-					classes.putString("classes", "search_online");
-					intent6.putExtras(classes);
-					startActivity(intent6);
-					break;
-
-				default:
-					break;
-				}
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mLeftMenu.toggle();
 			}
 		});
+		relativeLayout = (RelativeLayout) findViewById(R.id.main_rela_lay);
+		customFAB = (CustomFAB) findViewById(R.id.main_add);
+		customFAB.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new AddPopupWindows(MainActivity.this, relativeLayout);
+			}
+		});
+		
+		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
+		mPosition = new BmobGeoPoint();
+		
+		getPosition();
+		
+//		 SatelliteMenu menu = (SatelliteMenu) findViewById(R.id.menu);
+//		
+		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
+		
+//		WindowManager wm = this.getWindowManager();
+//		int width = wm.getDefaultDisplay().getWidth();
+//		int height = wm.getDefaultDisplay().getHeight();
+//		
+//		SatelliteMenu smenu = (SatelliteMenu) findViewById(R.id.menu);
+//		LinearLayout.LayoutParams params = (LayoutParams) smenu.getLayoutParams();
+//		params.topMargin = height - 1200;
+//		smenu.setLayoutParams(params);
+//		
+//		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
+//        items.add(new SatelliteMenuItem(6, R.drawable.ic_1));
+//        items.add(new SatelliteMenuItem(5, R.drawable.ic_3));
+//        items.add(new SatelliteMenuItem(4, R.drawable.ic_4));
+//        items.add(new SatelliteMenuItem(3, R.drawable.ic_5));
+//        items.add(new SatelliteMenuItem(2, R.drawable.ic_6));
+//        items.add(new SatelliteMenuItem(1, R.drawable.ic_2));
+////        items.add(new SatelliteMenuItem(5, R.drawable.sat_item));
+//        menu.addItems(items);        
+//        
+//        menu.setOnItemClickedListener(new SateliteClickedListener() {
+//			
+//			public void eventOccured(int id) {
+//				Log.i("sat", "Clicked on " + id);
+//				switch (id) {
+//				case 3:
+//					Intent intent3 = new Intent(MainActivity.this, NearResultActivity.class);
+//					startActivity(intent3);
+//					break;
+//					
+//				case 5:
+//					Intent intent5 = new Intent(MainActivity.this, PublishedActivity.class);
+//					startActivity(intent5);
+//					break;
+//					
+//				case 6:
+//					Intent intent6  = new Intent(MainActivity.this, CitiesActivity.class);
+//					Bundle classes = new Bundle();
+//					classes.putString("classes", "search_online");
+//					intent6.putExtras(classes);
+//					startActivity(intent6);
+//					break;
+//
+//				default:
+//					break;
+//				}
+//			}
+//		});
         /**
         onOff = (TextView) findViewById(R.id.activity_selectimg_switch);
         onOff.setOnClickListener(new OnClickListener() {
@@ -113,6 +189,132 @@ public class MainActivity extends Activity {
 		});
 		*/
 	}
+	
+	private void getPosition() {
+		// TODO Auto-generated method stub
+		mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+	    mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork,-1, 15, this);
+		
+	}
+	
+	private void getData(){
+		// TODO Auto-generated method stub
+		BmobQuery<BillInfo> bmobQuery = new BmobQuery<BillInfo>();
+		bmobQuery.addWhereNear("position", mPosition);
+		bmobQuery.addWhereEqualTo("username", "aaa");
+		bmobQuery.setLimit(100);    //获取最接近用户地点的10条数据
+		bmobQuery.findObjects(MainActivity.this, new FindListener<BillInfo>() {
+		    @Override
+		    public void onSuccess(List<BillInfo> object) {
+		        // TODO Auto-generated method stub
+		        //Toast.makeText(NearResultActivity.this, "查询成功：共" + object.size() + "条数据。"/*  + mPosition.getLatitude() + " " + mPosition.getLongitude()*/, Toast.LENGTH_LONG).show();
+		    	if(object.size() == 0) {
+		    		Toast.makeText(MainActivity.this, "没有找到哦~快去发起拼单吧~", Toast.LENGTH_LONG).show();
+		    		MainActivity.this.finish();
+		    	}
+		    	string_dec= "";
+		    	string_username="";
+		    	string_no="";
+		    	string_file_name="";
+		    	uri = new ArrayList<String>();
+		    	//myApplication.configPath(NearResultActivity.this);
+		    	for(BillInfo billInfo : object) {
+		    		string_username = string_username + billInfo.getUsername() + " ";
+		    		string_no = string_no + billInfo.getObjectId() + " ";
+		    		uri.add(billInfo.getImgfilename()[0]);
+		    		if(billInfo.getDescribe().equals("")) {
+		    			string_dec= string_dec + "暂无" + " ";
+		    		} else {
+		    			string_dec= string_dec + billInfo.getDescribe() + " ";
+		    		}
+		    	}
+		    	Log.e("url", string_file_name);
+		    	username = string_username.trim().split(" ");
+		    	no = string_no.trim().split(" ");
+		    	pre_desString = string_dec.trim().split(" ");
+		    	image_uri = uri.toArray(new String[uri.size()]);
+		    	length = username.length;
+		    	//Log.i("username", length+"");
+//		    	try {
+//					initView();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+		    	setupViews(length, image_uri, pre_desString);
+		    }
+		    @Override
+		    public void onError(int code, String msg) {
+		        // TODO Auto-generated method stub
+		    	Toast.makeText(MainActivity.this, "查询失败。+" + msg, Toast.LENGTH_LONG).show();
+		    }
+		});
+	}
+	
+	@Override
+	protected void onDestroy() {
+		
+		
+		ImageLoader imageLoader = adapter.getImageLoader();
+		if (imageLoader != null){
+			imageLoader.clearCache();
+		}
+		
+		super.onDestroy();
+	}
+
+
+
+	public void setupViews(int itemsCount, String[] urls, String[] des) {
+		mListview = (ListView) findViewById(R.id.datalist_main);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des);
+		mListview.setAdapter(adapter);
+		mListview.setOnScrollListener(mScrollListener);
+		mListview.setOnItemClickListener(new OnItemClickListener(){  
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				String objectid = no[position];
+				//Toast.makeText(SQLiteCRUDActivity.this, userid +" , "+ name +" , "+ age ,Toast.LENGTH_LONG).show(); 
+				Intent intent = new Intent(MainActivity.this, DetailResultActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("objectId", objectid);
+				intent.putExtras(bundle);
+				startActivity(intent);     
+			}  
+	});  
+	}
+
+	OnScrollListener mScrollListener = new OnScrollListener() {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			switch (scrollState) {
+			case OnScrollListener.SCROLL_STATE_FLING:
+				adapter.setFlagBusy(true);
+				break;
+			case OnScrollListener.SCROLL_STATE_IDLE:
+				adapter.setFlagBusy(false);
+				break;
+			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+				adapter.setFlagBusy(false);
+				break;
+			default:
+				break;
+			}
+			adapter.notifyDataSetChanged();
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+
+		}
+	};
+
+
 	
 	public void toggleMenu(View view)
 	{
@@ -182,5 +384,104 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(AMapLocation arg0) {
+		// TODO Auto-generated method stub
+		if(arg0 != null && arg0.getAMapException().getErrorCode() == 0) {
+			latitude = arg0.getLatitude();
+			longitude = arg0.getLongitude();
+			mPosition.setLatitude(latitude);
+			mPosition.setLongitude(longitude);
+			//Toast.makeText(NearActivity.this, latitude + " " + longitude, Toast.LENGTH_LONG).show();
+			getData();
+			//Log.e("position", arg0.getLatitude() + " " + arg0.getLongitude());
+		}
+	}
+	
+	public class AddPopupWindows extends PopupWindow
+	{
+
+		public AddPopupWindows(Context mContext, View parent)
+		{
+			
+			 super(mContext);
+
+			View view = View
+					.inflate(mContext, R.layout.add_popupwindows, null);  //选择拍照相册..
+			view.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.fade_ins)); //设置渐变出现动画
+			LinearLayout ll_popup = (LinearLayout) view
+					.findViewById(R.id.ll_popup);
+			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.push_bottom_in_2));  //按钮按下的动画效果
+
+			setWidth(LayoutParams.MATCH_PARENT);
+			setHeight(LayoutParams.MATCH_PARENT);
+			setBackgroundDrawable(new BitmapDrawable());
+			setFocusable(true);
+			setOutsideTouchable(true);
+			setContentView(view);
+			showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+			update();
+
+			Button bt1 = (Button) view
+					.findViewById(R.id.add_popupwindows_online);
+			Button bt2 = (Button) view
+					.findViewById(R.id.add_popupwindows_offline);
+			Button bt3 = (Button) view
+					.findViewById(R.id.add_popupwindows_cancel);
+			bt1.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					Intent intent = new Intent(MainActivity.this, PublishedActivity.class);
+					startActivity(intent);
+					dismiss();
+				}
+			});
+			bt2.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					Intent intent = new Intent(MainActivity.this, PublishedActivityOffLine.class);
+					startActivity(intent);
+					dismiss();
+				}
+			});
+			bt3.setOnClickListener(new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					dismiss();
+				}
+			});
+
+		}
 	}
 }

@@ -4,17 +4,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     
-     <TextView 
-         android:layout_width="match_parent"
-         android:layout_height="60dp"
-         android:text="附近"
-         android:textColor="#ffffff"
-         android:textSize="20sp" 
-         android:gravity="center"
-         android:background="#ff495a"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ff495a" >
+        
+        <TextView
+            android:id="@+id/push_tv_result"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:background="@drawable/ic_action_overflow"
+            android:textColor="@drawable/text_while"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/title_result_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="线上拼单-附近"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/search_tv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:background="@drawable/ic_action_search"
+            android:textColor="@drawable/text_while"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <ListView
-		android:id="@+id/datalist" 
+		android:id="@+id/datalist_sear_off" 
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		 android:clipToPadding="false"
