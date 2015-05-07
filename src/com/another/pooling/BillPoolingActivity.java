@@ -12,13 +12,15 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
-import com.another.pooling.MainActivity.AddPopupWindows;
+//import com.another.pooling.MainActivity.AddPopupWindows;
 import com.another.pooling.my.MyInfoActivity;
 import com.another.pooling.offline.BillPoolingActivityOffLine;
 import com.another.pooling.offline.PublishedActivityOffLine;
 import com.example.testpic.PublishedActivity;
 import com.geniusgithub.lazyloaddemo.LoaderAdapter;
-import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
+//import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
+
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,23 +28,26 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
+//import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
+//import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
-import android.view.ext.SatelliteMenu;
-import android.view.ext.SatelliteMenuItem;
-import android.view.ext.SatelliteMenu.SateliteClickedListener;
+//import android.view.ext.SatelliteMenu;
+//import android.view.ext.SatelliteMenuItem;
+//import android.view.ext.SatelliteMenu.SateliteClickedListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
+//import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -60,6 +65,8 @@ public class BillPoolingActivity extends Activity implements AMapLocationListene
 	private TextView title;
 	private CustomFAB customFAB;
 	private RelativeLayout relativeLayout;
+
+	boolean isExit;  
 	
 	private String username[] = null;
 	private String image_uri[] = null;
@@ -212,10 +219,10 @@ public class BillPoolingActivity extends Activity implements AMapLocationListene
 		    		string_username = string_username + billInfo.getUsername() + " ";
 		    		string_no = string_no + billInfo.getObjectId() + " ";
 		    		uri.add(billInfo.getImgfilename()[0]);
-		    		if(billInfo.getDescribe().equals("")) {
+		    		if(billInfo.getTabs() == null) {
 		    			string_dec= string_dec + "暂无" + " ";
 		    		} else {
-		    			string_dec= string_dec + billInfo.getDescribe() + " ";
+		    			string_dec= string_dec + billInfo.getTabs() + " ";
 		    		}
 		    	}
 		    	Log.e("url", string_file_name);
@@ -257,7 +264,7 @@ public class BillPoolingActivity extends Activity implements AMapLocationListene
 
 	public void setupViews(int itemsCount, String[] urls, String[] des) {
 		mListview = (ListView) findViewById(R.id.datalist_near);
-		adapter = new LoaderAdapter(itemsCount, this, urls, des);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des, 0);
 		mListview.setAdapter(adapter);
 		mListview.setOnScrollListener(mScrollListener);
 		mListview.setOnItemClickListener(new OnItemClickListener(){  
@@ -313,18 +320,58 @@ public class BillPoolingActivity extends Activity implements AMapLocationListene
 	public void EnterBillPoolingOnLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterBillPoolingOffLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivityOffLine.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterMyInfo(View view) {
 		Intent intent = new Intent(this, MyInfoActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
+	public void EnterMain(View view) {
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {  
+			exit();  
+			return false;  
+        } else {  
+            return super.onKeyDown(keyCode, event);  
+        } 
+	}
+	
+	public void exit(){  
+        if (!isExit) {  
+            isExit = true;  
+            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();  
+            mHandler.sendEmptyMessageDelayed(0, 2000);  
+        } else {  
+            finish(); 
+            System.exit(0);  
+        }  
+    }  
+	
+	Handler mHandler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            // TODO Auto-generated method stub   
+            super.handleMessage(msg);  
+            isExit = false;  
+        }  
+    };  
 	public void post(View view) {
 		Intent intent = new Intent(this, PublishedActivity.class);
 		//Bundle address = new Bundle();

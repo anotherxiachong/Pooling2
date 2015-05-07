@@ -1,5 +1,6 @@
 package com.geniusgithub.lazyloaddemo;
 
+import android.R.integer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +31,14 @@ public class LoaderAdapter extends BaseAdapter{
 	private Context mContext;
 	private String[] urlArrays;
 	private String[] describe;
+	private static int flag = 0;
 	
-	
-	public LoaderAdapter(int count, Context context, String []url, String []des) {
+	public LoaderAdapter(int count, Context context, String []url, String []des, int flag) {
 		this.mCount = count;
 		this.mContext = context;
 		urlArrays = url;
 		describe = des;
+		LoaderAdapter.flag = flag;
 		mImageLoader = new ImageLoader(context);
 	}
 	
@@ -68,13 +70,23 @@ public class LoaderAdapter extends BaseAdapter{
 
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(
-					R.layout.bill_info_layout, null);
-			viewHolder = new ViewHolder();
-			viewHolder.mTextView = (TextView) convertView
-					.findViewById(R.id.pre_describe);
-			viewHolder.mImageView = (ImageView) convertView
-					.findViewById(R.id.image);
+			if(LoaderAdapter.flag == 0) {
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.bill_info_layout, null);
+				viewHolder = new ViewHolder();
+				viewHolder.mTextView = (TextView) convertView
+						.findViewById(R.id.pre_describe);
+				viewHolder.mImageView = (ImageView) convertView
+						.findViewById(R.id.image);
+			} else {
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.image_info_layout, null);
+				viewHolder = new ViewHolder();
+				viewHolder.mTextView = (TextView) convertView
+						.findViewById(R.id.pre_describe_image);
+				viewHolder.mImageView = (ImageView) convertView
+						.findViewById(R.id.image_image);
+			}
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();

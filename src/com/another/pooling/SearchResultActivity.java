@@ -138,10 +138,10 @@ public class SearchResultActivity extends Activity {
 		    			string_username = string_username + billInfo.getUsername() + " ";
 		    			string_no = string_no + billInfo.getObjectId() + " ";
 		    			uri.add(billInfo.getImgfilename()[0]);
-		    			if(billInfo.getDescribe().equals("")) {
+		    			if(billInfo.getTabs() == null) {
 		    				string_dec= string_dec + "暂无" + " ";
 		    			} else {
-		    				string_dec= string_dec + billInfo.getDescribe() + " ";
+		    				string_dec= string_dec + billInfo.getTabs() + " ";
 		    			}
 		    		}
 		    		username = string_username.trim().split(" ");
@@ -189,7 +189,7 @@ public class SearchResultActivity extends Activity {
 
 	public void setupViews(int itemsCount, String[] urls, String[] des) {
 		mListview = (ListView) findViewById(R.id.datalist_search_result);
-		adapter = new LoaderAdapter(itemsCount, this, urls, des);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des, 0);
 		mListview.setAdapter(adapter);
 		mListview.setOnScrollListener(mScrollListener);
 		mListview.setOnItemClickListener(new OnItemClickListener(){  
@@ -244,16 +244,25 @@ public class SearchResultActivity extends Activity {
 	public void EnterBillPoolingOnLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterBillPoolingOffLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivityOffLine.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterMyInfo(View view) {
 		Intent intent = new Intent(this, MyInfoActivity.class);
 		startActivity(intent);
+		finish();
+	}
+	
+	public void EnterMain(View view) {
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
 	}
 	
 	

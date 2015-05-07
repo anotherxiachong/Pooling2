@@ -10,7 +10,7 @@
         android:background="#ff495a" >
         
         <TextView
-            android:id="@+id/back_tv_detail"
+            android:id="@+id/back_tv_detail_offline"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -23,7 +23,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/title_tv_detail"
+            android:id="@+id/title_tv_detail_offline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -53,14 +53,14 @@
         <ImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/usericon"
+            android:id="@+id/usericon_offline"
             android:src="@drawable/pooling_ic"
             android:visibility="gone"/>
         
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/r_username"
+            android:id="@+id/r_username_offline"
             android:layout_gravity="center"/>
     
     </LinearLayout>
@@ -74,7 +74,7 @@
         android:background="@color/light_grey" />
     
      <ListView
-                    android:id="@+id/datalist_detail" 
+                    android:id="@+id/datalist_detail_offline" 
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 		 			android:clipToPadding="false"
@@ -85,7 +85,7 @@
         			tools:listitem="@layout/image_info_layout"/>
     
      <View
-        android:id="@+id/list_item_seperator_2_detail"
+        android:id="@+id/list_item_seperator_2_detail_offline"
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_marginLeft="5dip"
@@ -100,7 +100,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_describe"
+            android:id="@+id/r_describe_offline"
             android:hint="商品描述"
             android:lines="5"
             android:background="@null"
@@ -117,7 +117,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_link"
+            android:id="@+id/r_link_offline"
             android:background="@null"
             android:editable="false"
             android:focusable="false"/>
@@ -137,7 +137,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_deadline"
+            android:id="@+id/r_deadline_offline"
             android:background="@null"
             android:editable="false"
             android:focusable="false"/>
@@ -152,7 +152,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_online_address"
+            android:id="@+id/r_online_address_offline"
             android:background="@null"
             android:editable="false"
             android:focusable="false"/>
@@ -168,7 +168,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_offline_address"
+            android:id="@+id/r_offline_address_offline"
             android:editable="false"
             android:background="@null"
             android:focusable="false"/>
@@ -184,7 +184,7 @@
         <EditText 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/r_tabs"
+            android:id="@+id/r_tabs_offline"
             android:text="N/A"
             android:editable="false"
             android:background="@null"
@@ -193,7 +193,7 @@
     </LinearLayout>
     
       <View
-        android:id="@+id/list_item_seperator_3_detail"
+        android:id="@+id/list_item_seperator_3_detail_offline"
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_marginLeft="5dip"
@@ -207,7 +207,7 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/follow_bill_detail"
+            android:id="@+id/follow_bill_detail_offline"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
             android:onClick="follow"/>
 
         <Button
-            android:id="@+id/cancel_detail"
+            android:id="@+id/cancel_detail_offline"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

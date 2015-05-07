@@ -43,7 +43,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"          
                 android:layout_marginTop="20dp"
-                android:src="@drawable/img_1"/>
+                android:src="@drawable/img_2"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,30 +60,9 @@
             
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:onClick="EnterMain">
             <ImageView  android:id="@+id/id_img2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"          
-                android:layout_marginTop="20dp"
-                android:src="@drawable/img_2"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/id_img2"
-                android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="20dp"
-                android:text="拼车"
-                 android:background="#0000"/>
-            </RelativeLayout>
-            
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView  android:id="@+id/id_img3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
@@ -93,15 +72,16 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/id_img3"
+                android:layout_toRightOf="@id/id_img2"
                 android:layout_centerVertical="true"
                 android:textSize="20sp"
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="20dp"
-                android:text="拼游"
+                android:text="官方"
                  android:background="#0000"/>
             </RelativeLayout>
             
+      
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -16,14 +16,17 @@ import com.another.pooling.BillInfo;
 import com.another.pooling.BillPoolingActivity;
 import com.another.pooling.CitiesActivity;
 import com.another.pooling.CustomFAB;
-import com.another.pooling.DetailResultActivity;
 import com.another.pooling.MainActivity;
-import com.another.pooling.NearResultActivity;
+//import com.another.pooling.DetailResultActivity;
+//import com.another.pooling.MainActivity;
+//import com.another.pooling.NearResultActivity;
 import com.another.pooling.R;
 import com.another.pooling.SlidingMenu;
 import com.example.testpic.PublishedActivity;
 import com.geniusgithub.lazyloaddemo.LoaderAdapter;
-import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
+//import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
+
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,22 +34,25 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
+//import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
-import android.view.ext.SatelliteMenu;
-import android.view.ext.SatelliteMenuItem;
-import android.view.ext.SatelliteMenu.SateliteClickedListener;
+//import android.view.ext.SatelliteMenu;
+//import android.view.ext.SatelliteMenuItem;
+//import android.view.ext.SatelliteMenu.SateliteClickedListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
+//import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -57,8 +63,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.another.pooling.*;
-import com.another.pooling.BillPoolingActivity.AddPopupWindows;
+
+
+//import com.another.pooling.*;
+//import com.another.pooling.BillPoolingActivity.AddPopupWindows;
 import com.another.pooling.my.MyInfoActivity;
 public class BillPoolingActivityOffLine extends Activity implements AMapLocationListener {
 	
@@ -66,7 +74,9 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 	private TextView title;
 	private CustomFAB customFAB;
 	private RelativeLayout relativeLayout;
-
+	
+	private boolean isExit;
+	
 	private String username[] = null;
 	private String image_uri[] = null;
 	private List<String> uri;
@@ -217,10 +227,10 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 		    		string_username = string_username + billInfo.getUsername() + " ";
 		    		string_no = string_no + billInfo.getObjectId() + " ";
 		    		uri.add(billInfo.getImgfilename()[0]);
-		    		if(billInfo.getDescribe().equals("")) {
+		    		if(billInfo.getTabs() == null) {
 		    			string_dec= string_dec + "暂无" + " ";
 		    		} else {
-		    			string_dec= string_dec + billInfo.getDescribe() + " ";
+		    			string_dec= string_dec + billInfo.getTabs() + " ";
 		    		}
 		    	}
 		    	Log.e("url", string_file_name);
@@ -262,7 +272,7 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 
 	public void setupViews(int itemsCount, String[] urls, String[] des) {
 		mListview = (ListView) findViewById(R.id.datalist_near_offline);
-		adapter = new LoaderAdapter(itemsCount, this, urls, des);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des, 0);
 		mListview.setAdapter(adapter);
 		mListview.setOnScrollListener(mScrollListener);
 		mListview.setOnItemClickListener(new OnItemClickListener(){  
@@ -308,7 +318,6 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 
 		}
 	};
-
 	
 	public void toggleMenu(View view)
 	{
@@ -328,17 +337,57 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 	public void EnterBillPoolingOnLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterBillPoolingOffLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivityOffLine.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterMyInfo(View view) {
 		Intent intent = new Intent(this, MyInfoActivity.class);
 		startActivity(intent);
+		finish();
 	}
+	
+	public void EnterMain(View view) {
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {  
+			exit();  
+			return false;  
+        } else {  
+            return super.onKeyDown(keyCode, event);  
+        } 
+	}
+	
+	public void exit(){  
+        if (!isExit) {  
+            isExit = true;  
+            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();  
+            mHandler.sendEmptyMessageDelayed(0, 2000);  
+        } else {  
+            finish(); 
+            System.exit(0);  
+        }  
+    }  
+	
+	Handler mHandler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            // TODO Auto-generated method stub   
+            super.handleMessage(msg);  
+            isExit = false;  
+        }  
+    };  
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

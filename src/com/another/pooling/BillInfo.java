@@ -18,7 +18,7 @@ public class BillInfo extends BmobObject {
 	String link;//
 	String address;//
 	String detailaddress;
-	ArrayList<String> tabs;
+	String tabs;
 	int classes;
 	String[] followman;
 	String[] imgfilename;
@@ -80,10 +80,10 @@ public class BillInfo extends BmobObject {
 	public void setDetailaddress(String detailaddress) {
 		this.detailaddress = detailaddress;
 	}
-	public ArrayList<String> getTabs() {
+	public String getTabs() {
 		return tabs;
 	}
-	public void setTabs(ArrayList<String> tabs) {
+	public void setTabs(String tabs) {
 		this.tabs = tabs;
 	}
 	public int getClasses() {

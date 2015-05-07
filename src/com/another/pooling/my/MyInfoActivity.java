@@ -1,25 +1,25 @@
 package com.another.pooling.my;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.ext.SatelliteMenu;
-import android.view.ext.SatelliteMenuItem;
-import android.view.ext.SatelliteMenu.SateliteClickedListener;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
+//import android.view.WindowManager;
+//import android.view.ext.SatelliteMenu;
+//import android.view.ext.SatelliteMenuItem;
+//import android.view.ext.SatelliteMenu.SateliteClickedListener;
+//import android.widget.LinearLayout;
+//import android.widget.LinearLayout.LayoutParams;
 
 import com.another.pooling.*;
 import com.another.pooling.offline.BillPoolingActivityOffLine;
-import com.example.testpic.PublishedActivity;
+//import com.example.testpic.PublishedActivity;
 public class MyInfoActivity extends Activity {
 	
 	private SlidingMenu mLeftMenu; 
@@ -29,54 +29,54 @@ public class MyInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_info);
 		
-SatelliteMenu menu = (SatelliteMenu) findViewById(R.id.menu);
+//SatelliteMenu menu = (SatelliteMenu) findViewById(R.id.menu);
 		
 		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		
-		WindowManager wm = this.getWindowManager();
-		int width = wm.getDefaultDisplay().getWidth();
-		int height = wm.getDefaultDisplay().getHeight();
-		
-		SatelliteMenu smenu = (SatelliteMenu) findViewById(R.id.menu);
-		LinearLayout.LayoutParams params = (LayoutParams) smenu.getLayoutParams();
-		params.topMargin = height - 1200;
-		smenu.setLayoutParams(params);
-		
-		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
-        items.add(new SatelliteMenuItem(6, R.drawable.ic_1));
-        items.add(new SatelliteMenuItem(5, R.drawable.ic_3));
-        items.add(new SatelliteMenuItem(4, R.drawable.ic_4));
-        items.add(new SatelliteMenuItem(3, R.drawable.ic_5));
-        items.add(new SatelliteMenuItem(2, R.drawable.ic_6));
-        items.add(new SatelliteMenuItem(1, R.drawable.ic_2));
-//        items.add(new SatelliteMenuItem(5, R.drawable.sat_item));
-        menu.addItems(items);        
-        
-        menu.setOnItemClickedListener(new SateliteClickedListener() {
-			
-			public void eventOccured(int id) {
-				Log.i("sat", "Clicked on " + id);
-				switch (id) {
-				case 1:
-					Intent intent1 = new Intent(MyInfoActivity.this, MyFollowResultActivity.class);
-					startActivity(intent1);
-					break;
-					
-				case 5:
-					Intent intent5 = new Intent(MyInfoActivity.this, MyPublishedResultActivity.class);
-					startActivity(intent5);
-					break;
-					
-				case 2:
-					Intent intent2  = new Intent(MyInfoActivity.this, MyTelActivity.class);
-					startActivity(intent2);
-					break;
-
-				default:
-					break;
-				}
-			}
-		});
+//		WindowManager wm = this.getWindowManager();
+//		int width = wm.getDefaultDisplay().getWidth();
+//		int height = wm.getDefaultDisplay().getHeight();
+//		
+//		SatelliteMenu smenu = (SatelliteMenu) findViewById(R.id.menu);
+//		LinearLayout.LayoutParams params = (LayoutParams) smenu.getLayoutParams();
+//		params.topMargin = height - 1200;
+//		smenu.setLayoutParams(params);
+//		
+//		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
+//        items.add(new SatelliteMenuItem(6, R.drawable.ic_1));
+//        items.add(new SatelliteMenuItem(5, R.drawable.ic_3));
+//        items.add(new SatelliteMenuItem(4, R.drawable.ic_4));
+//        items.add(new SatelliteMenuItem(3, R.drawable.ic_5));
+//        items.add(new SatelliteMenuItem(2, R.drawable.ic_6));
+//        items.add(new SatelliteMenuItem(1, R.drawable.ic_2));
+////        items.add(new SatelliteMenuItem(5, R.drawable.sat_item));
+//        menu.addItems(items);        
+//        
+//        menu.setOnItemClickedListener(new SateliteClickedListener() {
+//			
+//			public void eventOccured(int id) {
+//				Log.i("sat", "Clicked on " + id);
+//				switch (id) {
+//				case 1:
+//					Intent intent1 = new Intent(MyInfoActivity.this, MyFollowResultActivity.class);
+//					startActivity(intent1);
+//					break;
+//					
+//				case 5:
+//					Intent intent5 = new Intent(MyInfoActivity.this, MyPublishedResultActivity.class);
+//					startActivity(intent5);
+//					break;
+//					
+//				case 2:
+//					Intent intent2  = new Intent(MyInfoActivity.this, MyTelActivity.class);
+//					startActivity(intent2);
+//					break;
+//
+//				default:
+//					break;
+//				}
+//			}
+//		});
 	}
 	
 	public void toggleMenu(View view)
