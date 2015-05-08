@@ -29,5 +29,7 @@
     <string name="title_activity_my_follow_result">MyFollowResultActivity</string>
     <string name="title_activity_my_published_result">MyPublishedResultActivity</string>
     <string name="title_activity_my_tel">MyTelActivity</string>
+    <string name="title_activity_detail_result_my_published">DetailResultMyPublishedActivity</string>
+    <string name="title_activity_follow_man">FollowManActivity</string>
 
 </resources>

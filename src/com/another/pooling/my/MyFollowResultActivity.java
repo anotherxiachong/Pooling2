@@ -9,6 +9,9 @@ import java.util.List;
 
 
 
+
+
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -18,17 +21,27 @@ import cn.bmob.v3.listener.FindListener;
 
 
 
+
+
+
 //
 //import com.amap.api.location.AMapLocation;
 //import com.amap.api.location.AMapLocationListener;
 //import com.amap.api.location.LocationManagerProxy;
 //import com.amap.api.location.LocationProviderProxy;
 import com.another.pooling.BillInfo;
+import com.another.pooling.DetailResultActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 //import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 //import android.util.Log;
 //import android.view.View;
 //import android.widget.AdapterView;
@@ -36,8 +49,11 @@ import android.os.Bundle;
 //import android.widget.ListView;
 //import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.another.pooling.R;
+import com.geniusgithub.lazyloaddemo.LoaderAdapter;
 
 
 public class MyFollowResultActivity extends Activity {
@@ -52,6 +68,11 @@ public class MyFollowResultActivity extends Activity {
 	private String string_username;
 	private String string_no;
 	private int length = 0;
+	
+private TextView back;
+	
+	private ListView mListview;
+	private LoaderAdapter adapter;
 
 //	private ListView datalist = null; // 定义ListView组件
 //	private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); // 定义显示的内容包装
@@ -61,8 +82,16 @@ public class MyFollowResultActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.activity_result);
-		
+		super.setContentView(R.layout.activity_my_follow_result);
+		back = (TextView) findViewById(R.id.back_tv_my_follow);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MyFollowResultActivity.this.finish();
+			}
+		});
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 		getData();
 	}
@@ -104,14 +133,15 @@ public class MyFollowResultActivity extends Activity {
 		    	length = username.length;
 		    	//Log.i("username", length+"");
 //		    	initView();
-		    	Intent intent = new Intent(MyFollowResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
-		    	Bundle bundle = new Bundle();
-		    	bundle.putStringArray("urls", image_uri);
-		    	bundle.putStringArray("describe", pre_desString);
-		    	bundle.putStringArray("no", no);
-		    	bundle.putInt("count", length);
-		    	intent.putExtras(bundle);
-		    	startActivity(intent);
+//		    	Intent intent = new Intent(MyFollowResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
+//		    	Bundle bundle = new Bundle();
+//		    	bundle.putStringArray("urls", image_uri);
+//		    	bundle.putStringArray("describe", pre_desString);
+//		    	bundle.putStringArray("no", no);
+//		    	bundle.putInt("count", length);
+//		    	intent.putExtras(bundle);
+//		    	startActivity(intent);
+		    	setupViews(length, image_uri, pre_desString);
 		    }
 		    @Override
 		    public void onError(int code, String msg) {
@@ -120,6 +150,71 @@ public class MyFollowResultActivity extends Activity {
 		    }
 		});
 	}
+	
+//	@Override
+//	protected void onDestroy() {
+//		
+//		
+//		ImageLoader imageLoader = adapter.getImageLoader();
+//		if (imageLoader != null){
+//			imageLoader.clearCache();
+//		} else {
+//			return;
+//		}
+//		
+//		super.onDestroy();
+//	}
+
+
+
+	public void setupViews(int itemsCount, String[] urls, String[] des) {
+		mListview = (ListView) findViewById(R.id.datalist_search_result_my_follow);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des, 0);
+		mListview.setAdapter(adapter);
+		mListview.setOnScrollListener(mScrollListener);
+		mListview.setOnItemClickListener(new OnItemClickListener(){  
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				String objectid = no[position];
+				//Toast.makeText(SQLiteCRUDActivity.this, userid +" , "+ name +" , "+ age ,Toast.LENGTH_LONG).show(); 
+				Intent intent = new Intent(MyFollowResultActivity.this, DetailResultActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("objectId", objectid);
+				intent.putExtras(bundle);
+				startActivity(intent);     
+			}  
+	});  
+	}
+
+	OnScrollListener mScrollListener = new OnScrollListener() {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			switch (scrollState) {
+			case OnScrollListener.SCROLL_STATE_FLING:
+				adapter.setFlagBusy(true);
+				break;
+			case OnScrollListener.SCROLL_STATE_IDLE:
+				adapter.setFlagBusy(false);
+				break;
+			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+				adapter.setFlagBusy(false);
+				break;
+			default:
+				break;
+			}
+			adapter.notifyDataSetChanged();
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+
+		}
+	};
 
 	
 	

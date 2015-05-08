@@ -4,4 +4,6 @@
     <color name="super_light_grey">#f6f6f6</color>
     <color name="white">#ffffff</color>
     <color name="light_blue">@android:color/holo_blue_light</color>
+      <color name="info_panel_bg">#ffeeeeee</color>
+       <color name="button_unselected">#ff54acea</color>
 </resources>

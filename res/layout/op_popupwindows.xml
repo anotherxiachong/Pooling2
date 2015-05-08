@@ -5,7 +5,7 @@
     android:background="@drawable/bg_transparent" >
 
     <LinearLayout
-        android:id="@+id/ll_popup_add"
+        android:id="@+id/ll_popup_op"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -23,13 +23,13 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/add_popupwindows_online"
+                android:id="@+id/op_popupwindows_query_followman"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@drawable/bt_nobgd"
                 android:textColor="#585858"
                 android:textSize="18sp"
-                android:text="线上" />
+                android:text="查看跟单用户" />
         </LinearLayout>
 
         <TextView
@@ -44,13 +44,13 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/add_popupwindows_offline"
+                android:id="@+id/op_popupwindows_offline_undo"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@drawable/bt_nobgd"
                 android:textColor="#585858"
                 android:textSize="18sp"
-                android:text="线下" />
+                android:text="撤销拼单" />
         </LinearLayout>
 
         <TextView
@@ -59,7 +59,7 @@
             android:background="#f3f3f3" />
 
         <Button
-            android:id="@+id/add_popupwindows_cancel"
+            android:id="@+id/op_popupwindows_cancel"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/bt_nobgd"

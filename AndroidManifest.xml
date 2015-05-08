@@ -169,23 +169,30 @@
         <activity android:name=".offline.SearchResultActivityOffLine" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.MyInfoActivity"
+            android:name=".my.MyInfoActivity"
             android:label="@string/title_activity_my_info" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.MyFollowResultActivity"
+            android:name=".my.MyFollowResultActivity"
             android:label="@string/title_activity_my_follow_result" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.MyPublishedResultActivity"
+            android:name=".my.MyPublishedResultActivity"
             android:label="@string/title_activity_my_published_result" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.MyTelActivity"
+            android:name=".my.MyTelActivity"
             android:label="@string/title_activity_my_tel" >
         </activity>
-        <activity 
-            android:name="com.geniusgithub.lazyloaddemo.MainActivity">
+        <activity android:name="com.geniusgithub.lazyloaddemo.MainActivity" >
+        </activity>
+        <activity
+            android:name="com.another.pooling.my.DetailResultMyPublishedActivity"
+            android:label="@string/title_activity_detail_result_my_published" >
+        </activity>
+        <activity
+            android:name="com.another.pooling.my.FollowManActivity"
+            android:label="@string/title_activity_follow_man" >
         </activity>
     </application>
 

@@ -14,6 +14,11 @@ import cn.bmob.v3.listener.FindListener;
 
 
 
+
+
+
+
+import com.geniusgithub.lazyloaddemo.LoaderAdapter;
 import com.hulefei.android.MySimpleAdapter;
 
 import android.app.Activity;
@@ -22,9 +27,13 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.another.pooling.*;
@@ -42,12 +51,17 @@ public class MyPublishedResultActivity extends Activity {
 	private String string_file_name;
 	private int length = 0;
 
-	private ListView datalist = null; // 定义ListView组件
+	private TextView back;
+	
+	private ListView mListview;
+	private LoaderAdapter adapter;
+
+//	private ListView datalist = null; // 定义ListView组件
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.activity_result);
+		super.setContentView(R.layout.activity_my_published_result);
 //		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
 //        .detectDiskReads().detectDiskWrites().detectNetwork()  
 //        .penaltyLog().build());  
@@ -55,7 +69,17 @@ public class MyPublishedResultActivity extends Activity {
 //        .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()  
 //        .penaltyLog().penaltyDeath().build());  
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
-	
+		back = (TextView) findViewById(R.id.back_tv_my_publish);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MyPublishedResultActivity.this.finish();
+			}
+		});
+		
+		
 		getData();
 	}
 
@@ -105,14 +129,15 @@ public class MyPublishedResultActivity extends Activity {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-		    	Intent intent = new Intent(MyPublishedResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
-		    	Bundle bundle = new Bundle();
-		    	bundle.putStringArray("urls", image_uri);
-		    	bundle.putStringArray("describe", pre_desString);
-		    	bundle.putStringArray("no", no);
-		    	bundle.putInt("count", length);
-		    	intent.putExtras(bundle);
-		    	startActivity(intent);
+//		    	Intent intent = new Intent(MyPublishedResultActivity.this, com.geniusgithub.lazyloaddemo.MainActivity.class);
+//		    	Bundle bundle = new Bundle();
+//		    	bundle.putStringArray("urls", image_uri);
+//		    	bundle.putStringArray("describe", pre_desString);
+//		    	bundle.putStringArray("no", no);
+//		    	bundle.putInt("count", length);
+//		    	intent.putExtras(bundle);
+//		    	startActivity(intent);
+		    	setupViews(length, image_uri, pre_desString);
 		    }
 		    @Override
 		    public void onError(int code, String msg) {
@@ -121,6 +146,74 @@ public class MyPublishedResultActivity extends Activity {
 		    }
 		});
 	}
+	
+//	@Override
+//	protected void onDestroy() {
+//		
+//		
+//		ImageLoader imageLoader = adapter.getImageLoader();
+//		if (imageLoader != null){
+//			imageLoader.clearCache();
+//		} else {
+//			return;
+//		}
+//		
+//		super.onDestroy();
+//	}
+
+
+
+	public void setupViews(int itemsCount, String[] urls, String[] des) {
+		mListview = (ListView) findViewById(R.id.datalist_search_result_my_publish);
+		adapter = new LoaderAdapter(itemsCount, this, urls, des, 0);
+		mListview.setAdapter(adapter);
+		mListview.setOnScrollListener(mScrollListener);
+		mListview.setOnItemClickListener(new OnItemClickListener(){  
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				String objectid = no[position];
+				//Toast.makeText(SQLiteCRUDActivity.this, userid +" , "+ name +" , "+ age ,Toast.LENGTH_LONG).show(); 
+				Intent intent = new Intent(MyPublishedResultActivity.this, DetailResultMyPublishedActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("objectId", objectid);
+				intent.putExtras(bundle);
+				startActivity(intent);     
+			}  
+	});  
+	}
+
+	OnScrollListener mScrollListener = new OnScrollListener() {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			switch (scrollState) {
+			case OnScrollListener.SCROLL_STATE_FLING:
+				adapter.setFlagBusy(true);
+				break;
+			case OnScrollListener.SCROLL_STATE_IDLE:
+				adapter.setFlagBusy(false);
+				break;
+			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+				adapter.setFlagBusy(false);
+				break;
+			default:
+				break;
+			}
+			adapter.notifyDataSetChanged();
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+
+		}
+	};
+	
+	
+	
 
 //	
 //	private void initView() throws IOException {

@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.another.pooling.FollowManActivity" >
 
-     <LinearLayout 
+   <LinearLayout 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"  
@@ -14,8 +15,8 @@
         android:layout_height="60dp"
         android:background="#ff495a" >
         
-       <TextView
-            android:id="@+id/back_tv_my_publish"
+        <TextView
+            android:id="@+id/back_tv_follow_man"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -28,18 +29,30 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/title_tv_my_publish"
+            android:id="@+id/title_tv_search_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="我的发起"
+            android:text="跟单用户"
             android:textColor="#ffffff"
             android:textSize="20sp" />
+        
+         <TextView
+            android:id="@+id/about_tv_follow_man"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:background="@drawable/ic_action_about"
+            android:textColor="@drawable/text_while"
+            android:textSize="20sp" />
 
-       
+      
     </RelativeLayout>
-<RelativeLayout 
-          android:id="@+id/my_publish_rela_lay"
+     <RelativeLayout 
+          android:id="@+id/follow_man_rela_lay"
           android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -47,18 +60,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin">
                 
                 <ListView
-                    android:id="@+id/datalist_search_result_my_publish" 
+                    android:id="@+id/datalist_follow_man" 
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 		 			android:clipToPadding="false"
         			android:divider="@android:color/transparent"
         			android:dividerHeight="10dp"
         			android:padding="10dp"
-        			android:scrollbarStyle="outsideOverlay"
-        			tools:listitem="@layout/bill_info_layout"/>
-                
-                
-            
+        			android:scrollbarStyle="outsideOverlay"/>           
+           
     </RelativeLayout>
             </LinearLayout>
 
