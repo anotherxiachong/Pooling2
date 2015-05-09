@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#ff495a" >
+        android:background="#9966CC" >
         
         <TextView
             android:id="@+id/back_tv_detail"

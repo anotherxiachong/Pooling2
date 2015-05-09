@@ -61,6 +61,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.another.pooling.*;
+
 public class PublishedActivity extends Activity implements AMapLocationListener
 {
 
@@ -79,6 +81,8 @@ public class PublishedActivity extends Activity implements AMapLocationListener
 	LocationManagerProxy mLocationManagerProxy;
 	private String[] savefilename, savefileuri;
 	
+	private String initEndDateTime = "2015年5月20日 00:00"; // 初始化结束时间
+	
 
 	private static String[] names =null;
 
@@ -89,6 +93,14 @@ public class PublishedActivity extends Activity implements AMapLocationListener
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 		decribe = (EditText) findViewById(R.id.describe);
 		deadline = (EditText) findViewById(R.id.deadline);
+		deadline.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+						PublishedActivity.this, initEndDateTime);
+				dateTimePicKDialog.dateTimePicKDialog(deadline);
+			}
+		});
 		link = (EditText) findViewById(R.id.link);
 		address = (EditText) findViewById(R.id.address);
 		detailaddress = (EditText) findViewById(R.id.detail_address);

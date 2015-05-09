@@ -8,7 +8,20 @@
     <RelativeLayout
              android:layout_width="match_parent"
              android:layout_height="60dp"
-             android:background="#ff495a" >
+             android:background="#9966CC" >
+             
+         <TextView
+            android:id="@+id/back_tv_city"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:background="@drawable/ic_action_back"
+            android:textColor="@drawable/text_while"
+            android:textSize="20sp" />
              
              <TextView
                  android:layout_width="wrap_content"

@@ -1,16 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.another.pooling.MyTelActivity" >
-    
-     <RelativeLayout
+    android:layout_height="match_parent">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#9966CC" >
         
-       <TextView
-            android:id="@+id/back_tv_my_tel"
+        <TextView
+            android:id="@+id/back_tv_about"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -23,37 +22,46 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/title_tv_my_tel"
+            android:id="@+id/title_tv_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="联系方式"
+            android:text="关于"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
       
     </RelativeLayout>
-
-    <EditText
-        android:id="@+id/mytel_et"
-        android:layout_width="wrap_content"
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="109dp"
-        android:ems="10"
-        android:inputType="phone"
-        android:gravity="center" >
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
 
-        <requestFocus />
+           <ImageView
+        android:id="@+id/image_about"
+        android:layout_gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/pooling_ic_middle" />
+    <EditText
+        android:id="@+id/text_about"
+        android:layout_gravity = "center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" 
+        android:editable="false"
+        android:enabled="false"
+        android:background="@null">
+
+        <requestFocus />   
     </EditText>
 
-    <Button
-        android:id="@+id/mytel_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="保存" />
+    </LinearLayout>
+
+   
 
 </RelativeLayout>

@@ -265,6 +265,12 @@ public class SearchResultActivity extends Activity {
 		finish();
 	}
 	
+	public void EnterSetting(View view) {
+		Intent intent = new Intent(this, SettingActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
 	
 //	
 //	private void initView() {

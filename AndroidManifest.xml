@@ -135,8 +135,7 @@
         </activity>
         <activity
             android:name="com.example.testpic.PublishedActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
         <activity
             android:name="com.example.testpic.ImageGridActivity"
@@ -157,8 +156,7 @@
         </activity>
         <activity
             android:name=".offline.PublishedActivityOffLine"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity android:name=".offline.BillPoolingActivityOffLine" >
         </activity>
@@ -187,12 +185,16 @@
         <activity android:name="com.geniusgithub.lazyloaddemo.MainActivity" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.DetailResultMyPublishedActivity"
+            android:name=".my.DetailResultMyPublishedActivity"
             android:label="@string/title_activity_detail_result_my_published" >
         </activity>
         <activity
-            android:name="com.another.pooling.my.FollowManActivity"
+            android:name=".my.FollowManActivity"
             android:label="@string/title_activity_follow_man" >
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

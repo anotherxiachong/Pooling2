@@ -80,6 +80,8 @@ public class CitiesActivity extends Activity implements OnWheelChangedListener
 	
 	private String classes;
 	private TextView sure;
+	
+	private TextView back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -134,6 +136,16 @@ public class CitiesActivity extends Activity implements OnWheelChangedListener
 					startActivity(intent);
 					finish();
 				}
+			}
+		});
+		
+		back = (TextView) findViewById(R.id.back_tv_city);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CitiesActivity.this.finish();
 			}
 		});
 		

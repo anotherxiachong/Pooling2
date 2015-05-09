@@ -219,21 +219,31 @@ private TextView mChangeCommentTextView;
 	public void EnterBillPoolingOnLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterBillPoolingOffLine(View view) {
 		Intent intent = new Intent(this, BillPoolingActivityOffLine.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterMyInfo(View view) {
 		Intent intent = new Intent(this, MyInfoActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	public void EnterMain(View view) {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
+		finish();
+	}
+	
+	public void EnterSetting(View view) {
+		Intent intent = new Intent(this, SettingActivity.class);
+		startActivity(intent);
+		finish();
 	}
 	
 	@Override

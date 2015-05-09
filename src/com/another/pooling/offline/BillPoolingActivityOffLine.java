@@ -21,10 +21,12 @@ import com.another.pooling.MainActivity;
 //import com.another.pooling.MainActivity;
 //import com.another.pooling.NearResultActivity;
 import com.another.pooling.R;
+import com.another.pooling.SettingActivity;
 import com.another.pooling.SlidingMenu;
 import com.example.testpic.PublishedActivity;
 import com.geniusgithub.lazyloaddemo.LoaderAdapter;
 //import com.geniusgithub.lazyloaddemo.cache.ImageLoader;
+
 
 
 
@@ -62,6 +64,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
 
 
 
@@ -354,6 +357,12 @@ public class BillPoolingActivityOffLine extends Activity implements AMapLocation
 	
 	public void EnterMain(View view) {
 		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	public void EnterSetting(View view) {
+		Intent intent = new Intent(this, SettingActivity.class);
 		startActivity(intent);
 		finish();
 	}

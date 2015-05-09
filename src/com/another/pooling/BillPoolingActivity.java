@@ -22,6 +22,7 @@ import com.geniusgithub.lazyloaddemo.LoaderAdapter;
 
 
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -337,6 +338,12 @@ public class BillPoolingActivity extends Activity implements AMapLocationListene
 	
 	public void EnterMain(View view) {
 		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	public void EnterSetting(View view) {
+		Intent intent = new Intent(this, SettingActivity.class);
 		startActivity(intent);
 		finish();
 	}

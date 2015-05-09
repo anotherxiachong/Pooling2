@@ -18,12 +18,14 @@ import com.amap.api.location.LocationProviderProxy;
 import com.another.pooling.BillInfo;
 import com.another.pooling.BillPoolingActivity;
 import com.another.pooling.CitiesActivity;
+import com.another.pooling.DateTimePickDialogUtil;
 import com.another.pooling.R;
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadBatchListener;
 import com.example.testpic.Bimp;
 import com.example.testpic.FileUtils;
 import com.example.testpic.PhotoActivity;
+import com.example.testpic.PublishedActivity;
 import com.example.testpic.TestPicActivity;
 
 import android.R.integer;
@@ -84,6 +86,7 @@ public class PublishedActivityOffLine extends Activity implements AMapLocationLi
 	
 
 	private static String[] names =null;
+	private String initEndDateTime = "2015年5月20日 00:00"; // 初始化结束时间
 
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -92,6 +95,14 @@ public class PublishedActivityOffLine extends Activity implements AMapLocationLi
 		Bmob.initialize(this, "dc417cd048f5197ba699440c13977f34");
 		decribe = (EditText) findViewById(R.id.describe);
 		deadline = (EditText) findViewById(R.id.deadline);
+		deadline.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+						PublishedActivityOffLine.this, initEndDateTime);
+				dateTimePicKDialog.dateTimePicKDialog(deadline);
+			}
+		});
 		link = (EditText) findViewById(R.id.link);
 		link.setVisibility(View.GONE);
 		address = (EditText) findViewById(R.id.address);

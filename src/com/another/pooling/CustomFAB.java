@@ -86,7 +86,7 @@ private void init(AttributeSet attrSet) {
        Resources.Theme theme = ctx.getTheme();
        TypedArray arr = theme.obtainStyledAttributes(attrSet, R.styleable.FAB, 0, 0);
        try {
-           setBgColor(arr.getColor(R.styleable.FAB_bg_color, Color.BLUE));
+           setBgColor(arr.getColor(R.styleable.FAB_bg_color, 0x9966CC));
            setBgColorPressed(arr.getColor(R.styleable.FAB_bg_color_pressed, Color.GRAY));
            StateListDrawable sld = new StateListDrawable();
 

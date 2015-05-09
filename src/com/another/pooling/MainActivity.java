@@ -344,6 +344,12 @@ public class MainActivity extends Activity implements AMapLocationListener {
 		startActivity(intent);
 		finish();
 	}
+	
+	public void EnterSetting(View view) {
+		Intent intent = new Intent(this, SettingActivity.class);
+		startActivity(intent);
+		finish();
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

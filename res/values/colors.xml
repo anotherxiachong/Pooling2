@@ -6,4 +6,7 @@
     <color name="light_blue">@android:color/holo_blue_light</color>
       <color name="info_panel_bg">#ffeeeeee</color>
        <color name="button_unselected">#ff54acea</color>
+    <color name="border_clo">#ccc</color>
+    <color name="text_clo">#333</color>
+    <color name="blue">#419DE4</color>
 </resources>
