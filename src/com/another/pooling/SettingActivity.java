@@ -48,6 +48,7 @@ public class SettingActivity  extends Activity{
 	private LinearLayout feedback;
 	private LinearLayout about;
 	private LinearLayout clean;
+	private LinearLayout exit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -100,6 +101,25 @@ public class SettingActivity  extends Activity{
 				DataCleanManager.cleanInternalCache(SettingActivity.this);
 				DataCleanManager.cleanExternalCache(SettingActivity.this);
 				Toast.makeText(SettingActivity.this, "清理成功", Toast.LENGTH_LONG).show();
+			}
+		});
+		
+		exit = (LinearLayout) findViewById(R.id.account_exit_setting);
+		exit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				BmobUser.logOut(SettingActivity.this);
+				BmobUser currentUser = BmobUser.getCurrentUser(SettingActivity.this);
+				if(currentUser == null) { 
+					Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+					startActivity(intent);
+					SettingActivity.this.finish();
+				} else {
+					Toast.makeText(SettingActivity.this, "未知错误，请重试", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 //		json = getIntent().getStringExtra("json");
