@@ -14,6 +14,7 @@ public class UserInfo extends BmobObject{
 	String usericon;
 	String signature;
 	String sex;
+	String age;
 	String alwaysaddres;
 	
 	
@@ -76,6 +77,19 @@ public class UserInfo extends BmobObject{
 	 */
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	
+	/**
+	 * @return the age
+	 */
+	public String getAge() {
+		return age;
+	}
+	/**
+	 * @param string the age to set
+	 */
+	public void setAge(String string) {
+		this.age = string;
 	}
 	/**
 	 * @return the alwaysaddres

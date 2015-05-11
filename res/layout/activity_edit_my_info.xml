@@ -1,0 +1,201 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#9966CC" >
+
+            <TextView
+                android:id="@+id/back_tv_edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ic_action_back"
+                android:gravity="center"
+                android:textColor="@drawable/text_while"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/title_tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="编辑资料"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/save_tv_edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ic_action_save"
+                android:gravity="center"
+                android:textColor="@drawable/text_while"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <sun.geoffery.uploadpic.CircleImg
+            android:id="@+id/avatarImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/user_icon_default" />
+
+        <TextView
+            android:id="@+id/userNameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="5dp"
+            android:text="夏虫"
+            android:textColor="#CEC9E7"
+            android:textSize="16sp" />
+
+        <LinearLayout style="@style/wrap_layout" >
+
+            <!-- 上圆角 -->
+
+            <LinearLayout
+                android:id="@+id/nickname_edit"
+                style="@style/top_layout" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="昵称" />
+                
+                <EditText 
+                    android:id="@+id/nickname_et_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:cursorVisible="false"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_clo"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <!-- 分割线 -->
+
+            <View style="@style/bg_line" />
+
+            <LinearLayout
+                android:id="@+id/sex_edit"
+                style="@style/mid_layout" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="性别" />
+
+                <EditText 
+                    android:id="@+id/sex_et_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:cursorVisible="false"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_clo"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <!-- 分割线 -->
+
+            <View style="@style/bg_line" />
+
+            <!-- 下圆角 -->
+
+            <LinearLayout
+                android:id="@+id/age_edit"
+                style="@style/bottom_layout" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="年龄" />
+
+                <EditText 
+                    android:id="@+id/age_et_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:cursorVisible="false"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_clo"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 全圆角 -->
+
+        <LinearLayout style="@style/wrap_layout" >
+
+            <LinearLayout
+                android:id="@+id/address_edit"
+                style="@style/single_layout" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="常用地址" />
+
+                <ImageView style="@style/img_arrow" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 全圆角 -->
+
+        <LinearLayout style="@style/wrap_layout" >
+
+            <LinearLayout
+                android:id="@+id/signature_edit"
+                style="@style/single_layout" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="个性签名" />
+
+                <ImageView style="@style/img_arrow" />
+            </LinearLayout>
+        </LinearLayout>
+        
+         <!-- 全圆角 -->
+
+        <LinearLayout style="@style/wrap_layout" >
+
+            <LinearLayout
+                android:id="@+id/save_icon_edit"
+                style="@style/single_layout_saveicon" >
+
+                <TextView
+                    style="@style/usertext"
+                    android:text="保存头像" 
+                    android:gravity="center"/>
+
+           
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

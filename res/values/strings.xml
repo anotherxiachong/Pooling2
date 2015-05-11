@@ -32,5 +32,6 @@
     <string name="title_activity_detail_result_my_published">DetailResultMyPublishedActivity</string>
     <string name="title_activity_follow_man">FollowManActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_edit_my_info">EditMyInfoActivity</string>
 
 </resources>

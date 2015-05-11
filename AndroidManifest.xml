@@ -156,7 +156,7 @@
         </activity>
         <activity
             android:name=".offline.PublishedActivityOffLine"
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
         <activity android:name=".offline.BillPoolingActivityOffLine" >
         </activity>
@@ -195,6 +195,10 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
+        </activity>
+        <activity
+            android:name="com.another.pooling.my.EditMyInfoActivity"
+            android:label="@string/title_activity_edit_my_info" >
         </activity>
     </application>
 

@@ -2,6 +2,8 @@ package com.another.pooling;
 
 import org.json.JSONObject;
 
+import com.another.pooling.my.UserInfo;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +44,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 			LoginActivity.this.finish();
 		}
 	}
+	
+	
 
 	public void initView(){
 		et_account = (EditText)findViewById(R.id.et_account);
@@ -54,6 +58,34 @@ public class LoginActivity extends Activity implements OnClickListener{
 		btn_register.setOnClickListener(this);
 		tv_weibo.setOnClickListener(this);
 		tv_qq.setOnClickListener(this);
+	}
+	
+	public void initInfo() {
+		UserInfo uInfo = new UserInfo();
+		uInfo.setUsername(account);
+		uInfo.setNickname("无");
+		uInfo.setUsericon("null");
+		uInfo.setSignature("这个人很懒，什么都没有留下");
+		uInfo.setSex("男");
+		uInfo.setAge("0");
+		uInfo.setAlwaysaddres("暂未设置");
+		uInfo.save(LoginActivity.this, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				toast("注册成功");
+				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				startActivity(intent);
+				LoginActivity.this.finish();
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				toast("注册失败："+arg1);
+			}
+		});
 	}
 
 //	JSONObject weiboObj = new JSONObject();
@@ -117,9 +149,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 				@Override
 				public void onSuccess() {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-					startActivity(intent);
-					LoginActivity.this.finish();
+					initInfo();
 				}
 
 				@Override
@@ -128,6 +158,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 					toast("注册失败："+arg1);
 				}
 			});
+			
+			
 			break;
 			
 		case R.id.tv_weibo:

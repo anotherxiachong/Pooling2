@@ -84,6 +84,11 @@
         <item name="android:background">@drawable/single_layout_selector</item>
     </style>
     
+    <!-- 全圆角保存头像样式 -->
+    <style name="single_layout_saveicon" parent="base_layout">
+        <item name="android:background">@drawable/single_layout_selector_saveicon</item>
+    </style>
+    
    
     
     <!-- textview样式 -->
@@ -110,6 +115,22 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/border_clo</item>
+    </style>
+    
+     <!-- 选择照片底部弹出层 -->
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in_upload</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out_upload</item>
+ 	</style>
+    
+    
+    <style name="TitleBarBackground">  
+        <item name="android:background">@drawable/bg_title_bar</item>  
+    </style>  
+            
+    <style name="MyCustomTheme" parent="android:Theme">       
+         <item name="android:windowTitleBackgroundStyle">@style/TitleBarBackground</item>  
+         <item name="android:windowTitleSize">47dp</item>  
     </style>
 
 </resources>
